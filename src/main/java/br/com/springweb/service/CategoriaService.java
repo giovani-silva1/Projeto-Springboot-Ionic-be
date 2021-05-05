@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.repositorys.CategoriaRepository;
+import br.com.springweb.service.exception.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -22,10 +23,9 @@ public class CategoriaService {
 
 	public Categoria encontrarCategoriaPorId(Long id) {
 		Optional<Categoria> categoriaEncontrada = categoriaRepository.findById(id);
-		return categoriaEncontrada.get();
+		return categoriaEncontrada.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado para o Id:" + id + ", Tipo:" + Categoria.class));
 
 	}
-	
-	
-	
+
 }
