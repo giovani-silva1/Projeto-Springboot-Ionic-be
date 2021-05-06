@@ -19,7 +19,7 @@ public class CidadeService {
 		return cidadeRepository.findAll();
 	}
 
-	public Cidade encontrarCidadePorId(Long id) {
+	public Cidade encontrarCidadePorId(Integer id) {
 		Optional<Cidade> cidadesEncontrada = cidadeRepository.findById(id);
 		return cidadesEncontrada.orElseThrow(() -> new ObjectNotFoundException(
 				"Registro não encontrada pelo id informado: " + id + ", Tipo:" + Cidade.class));

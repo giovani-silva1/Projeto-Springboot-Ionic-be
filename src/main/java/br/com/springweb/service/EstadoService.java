@@ -20,7 +20,7 @@ public class EstadoService {
 		return estadoRepository.findAll();
 	}
 
-	public Estado encontrarEstadoById(Long id) {
+	public Estado encontrarEstadoById(Integer id) {
 		Optional<Estado> estadoEncontrado = estadoRepository.findById(id);
 		return estadoEncontrado.orElseThrow(() -> new ObjectNotFoundException(
 				"Estado não encontrado para o id solicitado:" + id + ", tipo:" + Estado.class));

@@ -25,7 +25,7 @@ public class ProdutoController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Produto> listarProdutoPorId(@PathVariable Long id) {
+	public ResponseEntity<Produto> listarProdutoPorId(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(produtoService.listarProdutoPorId(id));
 	}
 }

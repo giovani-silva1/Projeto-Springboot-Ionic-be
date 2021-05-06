@@ -15,7 +15,7 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
-	public Endereco encontrarEnderecoPorId(Long id) {
+	public Endereco encontrarEnderecoPorId(Integer id) {
 		Optional<Endereco> enderecoEncontrado = enderecoRepository.findById(id);
 		return enderecoEncontrado.orElseThrow( ()-> new ObjectNotFoundException("Endereco encontrado pelo id informado :" + id + ", tipo " + Endereco.class));
 	}

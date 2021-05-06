@@ -21,7 +21,7 @@ public class CategoriaService {
 		return categoriaEncontradas;
 	}
 
-	public Categoria encontrarCategoriaPorId(Long id) {
+	public Categoria encontrarCategoriaPorId(Integer id) {
 		Optional<Categoria> categoriaEncontrada = categoriaRepository.findById(id);
 		return categoriaEncontrada.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado para o Id:" + id + ", Tipo:" + Categoria.class));

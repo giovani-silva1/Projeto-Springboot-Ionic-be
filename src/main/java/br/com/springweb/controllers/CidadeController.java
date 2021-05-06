@@ -25,7 +25,7 @@ public class CidadeController {
 	}
 
 	@GetMapping(value = "/{id}")
-	private ResponseEntity<Cidade> listarCidadePorId(@PathVariable Long id) {
+	private ResponseEntity<Cidade> listarCidadePorId(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(cidadeService.encontrarCidadePorId(id));
 	}
 }

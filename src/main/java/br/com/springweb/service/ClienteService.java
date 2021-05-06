@@ -20,7 +20,7 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente encontrarClientePorId(Long id) {
+	public Cliente encontrarClientePorId(Integer id) {
 		Optional<Cliente> clienteEncontrado = clienteRepository.findById(id);
 		return clienteEncontrado.orElseThrow(() -> new ObjectNotFoundException(
 				"Cliente não encontrado para o id informado:" + id + ", Tipo:" + Cliente.class));
