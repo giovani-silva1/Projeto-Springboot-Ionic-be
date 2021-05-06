@@ -9,10 +9,15 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.entities.Cidade;
+import br.com.springweb.entities.Cliente;
+import br.com.springweb.entities.Endereco;
 import br.com.springweb.entities.Estado;
 import br.com.springweb.entities.Produto;
+import br.com.springweb.entities.enums.TipoCliente;
 import br.com.springweb.repositorys.CategoriaRepository;
 import br.com.springweb.repositorys.CidadeRepository;
+import br.com.springweb.repositorys.ClienteRepository;
+import br.com.springweb.repositorys.EnderecoRepository;
 import br.com.springweb.repositorys.EstadoRepository;
 import br.com.springweb.repositorys.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class Configtest implements CommandLineRunner {
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -59,6 +70,16 @@ public class Configtest implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+
+		Cliente cliente = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		cliente.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+
+		Endereco endereco = new Endereco(null, "Rua Flores", "300", "Apto203", "Jardim", "38220834", cidade1, cliente);
+		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", "Sala800", "Centro", "38777012", cidade2,
+				cliente);
+
+		clienteRepository.save(cliente);
+		enderecoRepository.saveAll(Arrays.asList(endereco, endereco2));
 
 	}
 
