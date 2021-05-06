@@ -1,6 +1,5 @@
 package br.com.springweb;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.springweb.entities.Categoria;
+import br.com.springweb.entities.Cidade;
+import br.com.springweb.entities.Estado;
 import br.com.springweb.entities.Produto;
 import br.com.springweb.repositorys.CategoriaRepository;
+import br.com.springweb.repositorys.CidadeRepository;
+import br.com.springweb.repositorys.EstadoRepository;
 import br.com.springweb.repositorys.ProdutoRepository;
 
 @Configuration
@@ -22,6 +25,11 @@ public class Configtest implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -41,6 +49,16 @@ public class Configtest implements CommandLineRunner {
 
 		categoriaRepository.saveAll(Arrays.asList(categoria, categoria2));
 		produtoRepository.saveAll(Arrays.asList(produto, produto2, produto3));
+
+		Estado estado1 = new Estado(null, "Minas Gerais");
+		Estado estado2 = new Estado(null, "São Paulo");
+
+		Cidade cidade1 = new Cidade(null, "Uberlandia", estado1);
+		Cidade cidade2 = new Cidade(null, "São Paulo", estado2);
+		Cidade cidade3 = new Cidade(null, "Campinas", estado2);
+
+		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
+		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
 	}
 
