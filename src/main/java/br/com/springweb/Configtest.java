@@ -1,5 +1,6 @@
 package br.com.springweb;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import br.com.springweb.entities.Cidade;
 import br.com.springweb.entities.Cliente;
 import br.com.springweb.entities.Endereco;
 import br.com.springweb.entities.Estado;
+import br.com.springweb.entities.Pagamento;
+import br.com.springweb.entities.PagamentoComBoleto;
+import br.com.springweb.entities.PagamentoComCartao;
+import br.com.springweb.entities.Pedido;
 import br.com.springweb.entities.Produto;
+import br.com.springweb.entities.enums.EstadoPagamento;
 import br.com.springweb.entities.enums.TipoCliente;
 import br.com.springweb.repositorys.CategoriaRepository;
 import br.com.springweb.repositorys.CidadeRepository;
 import br.com.springweb.repositorys.ClienteRepository;
 import br.com.springweb.repositorys.EnderecoRepository;
 import br.com.springweb.repositorys.EstadoRepository;
+import br.com.springweb.repositorys.PagamentoRepository;
+import br.com.springweb.repositorys.PedidoRepository;
 import br.com.springweb.repositorys.ProdutoRepository;
 
 @Configuration
@@ -41,6 +49,12 @@ public class Configtest implements CommandLineRunner {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -80,6 +94,23 @@ public class Configtest implements CommandLineRunner {
 
 		clienteRepository.save(cliente);
 		enderecoRepository.saveAll(Arrays.asList(endereco, endereco2));
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
+		Pedido pedido = new Pedido(null, simpleDateFormat.parse("30/09/2017 10:32"),cliente , endereco);
+		Pedido pedido2 = new Pedido(null, simpleDateFormat.parse("30/09/2017 10:32"),cliente , endereco);
+		Pagamento pagamento = new PagamentoComCartao(null,EstadoPagamento.QUITADO, pedido, 6);
+		Pagamento pagamento2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,pedido2, simpleDateFormat2.parse("20/10/2017"),null);
+		pedido.setPagamento(pagamento);
+		pedido2.setPagamento(pagamento2);
+		
+		pedidoRepository.saveAll(Arrays.asList(pedido,pedido2));
+		pagamentoRepository.saveAll(Arrays.asList(pagamento,pagamento2));
+		
+		cliente.setPedidos(Arrays.asList(pedido,pedido2));
+		
+		
+		
 
 	}
 
