@@ -8,13 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.service.CategoriaService;
@@ -30,17 +29,22 @@ public class CategoriaController {
 	public ResponseEntity<List<Categoria>> listar() {
 		return ResponseEntity.ok().body(categoriaService.listarTodas());
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> listarCategoriaPorId(@PathVariable Integer id){
+	public ResponseEntity<Categoria> listarCategoriaPorId(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(categoriaService.encontrarCategoriaPorId(id));
 	}
-	
+
 	@PostMapping()
 	public ResponseEntity<Categoria> adicionarCategoria(@RequestBody Categoria categoria){
 		Categoria categoriaNova = categoriaService.adicionarCategoria(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoriaNova.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(categoriaNova);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria){
+		return ResponseEntity.ok().body(categoriaService.alterarCategoria(id, categoria));
 	}
 }

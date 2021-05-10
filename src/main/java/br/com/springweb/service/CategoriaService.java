@@ -27,9 +27,20 @@ public class CategoriaService {
 				"Objeto não encontrado para o Id:" + id + ", Tipo:" + Categoria.class));
 
 	}
-	
+
 	public Categoria adicionarCategoria(Categoria categoria) {
-		 return categoriaRepository.save(categoria);
+		return categoriaRepository.save(categoria);
+	}
+
+	public Categoria alterarCategoria(Integer id, Categoria categoria) {
+		Categoria categoriaEncontrada = categoriaRepository.findById(id)
+				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada"));
+		alterarCategoria(categoriaEncontrada, categoria);
+		return categoriaRepository.save(categoriaEncontrada);
+	}
+
+	private void alterarCategoria(Categoria categoriaEncontrada, Categoria categoria) {
+		categoriaEncontrada.setNome(categoria.getNome());
 	}
 
 }
