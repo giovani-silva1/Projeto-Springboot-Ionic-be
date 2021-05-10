@@ -1,5 +1,6 @@
 package br.com.springweb.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.service.CategoriaService;
@@ -34,6 +38,9 @@ public class CategoriaController {
 	
 	@PostMapping()
 	public ResponseEntity<Categoria> adicionarCategoria(@RequestBody Categoria categoria){
-		return ResponseEntity.ok().body(categoriaService.adicionarCategoria(categoria));
+		Categoria categoriaNova = categoriaService.adicionarCategoria(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoriaNova.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(categoriaNova);
 	}
 }
