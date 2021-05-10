@@ -3,11 +3,13 @@ package br.com.springweb.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.boot.model.source.internal.hbm.AuxiliaryDatabaseObjectBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.repositorys.CategoriaRepository;
+import br.com.springweb.service.exception.IntegridadeBancoDeDados;
 import br.com.springweb.service.exception.ObjectNotFoundException;
 
 @Service
@@ -41,6 +43,16 @@ public class CategoriaService {
 
 	private void alterarCategoria(Categoria categoriaEncontrada, Categoria categoria) {
 		categoriaEncontrada.setNome(categoria.getNome());
+	}
+
+	public void deletarCategoria(Integer id) {
+		encontrarCategoriaPorId(id);
+		try {
+			categoriaRepository.deleteById(id);
+		}catch (RuntimeException e) {
+			throw new IntegridadeBancoDeDados("Não foi possivel realizar a exclusão.");
+		}
+		
 	}
 
 }
