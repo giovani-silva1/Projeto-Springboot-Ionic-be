@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.springweb.entities.enums.EstadoPagamento;
 
@@ -30,7 +31,7 @@ public class Pagamento implements Serializable {
 	private Integer id;
 	private Integer estadoPagamento;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
