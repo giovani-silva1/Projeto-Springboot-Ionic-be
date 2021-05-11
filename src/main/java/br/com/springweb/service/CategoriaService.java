@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.hibernate.boot.model.source.internal.hbm.AuxiliaryDatabaseObjectBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import br.com.springweb.entities.Categoria;
@@ -49,10 +53,15 @@ public class CategoriaService {
 		encontrarCategoriaPorId(id);
 		try {
 			categoriaRepository.deleteById(id);
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new IntegridadeBancoDeDados("Não foi possivel realizar a exclusão.");
 		}
-		
+
+	}
+
+	public Page<Categoria> listarCategorias(Integer numeroPagina, Integer itensPorPagina, String direcao,String campoOrdenado) {
+		PageRequest pageRequest = PageRequest.of(numeroPagina, itensPorPagina, Direction.valueOf(direcao),campoOrdenado);
+		return categoriaRepository.findAll(pageRequest);
 	}
 
 }

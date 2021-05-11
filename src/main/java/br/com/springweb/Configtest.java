@@ -66,6 +66,15 @@ public class Configtest implements CommandLineRunner {
 
 		Categoria categoria = new Categoria(null, "Informatica");
 		Categoria categoria2 = new Categoria(null, "Escritório");
+		Categoria categoria3 = new Categoria(null, "CAMA MESA E BANHO");
+		Categoria categoria4 = new Categoria(null, "SOFTWARES");
+		Categoria categoria5 = new Categoria(null, "JARDINAGEM");
+		Categoria categoria6 = new Categoria(null, "FRUTAS");
+		Categoria categoria7 = new Categoria(null, "JOGOS ONLINE");
+		Categoria categoria8 = new Categoria(null, "ESPORTES");
+		Categoria categoria9 = new Categoria(null, "CARROS ESPORTIVOS");
+		Categoria categoria10 = new Categoria(null, "LIVROS");
+		Categoria categoria11 = new Categoria(null, "FERRAMENTAS");
 
 		Produto produto = new Produto(null, "Computador", 2000.00);
 		Produto produto2 = new Produto(null, "Impressora", 800.00);
@@ -77,7 +86,7 @@ public class Configtest implements CommandLineRunner {
 		produto2.getCategorias().addAll(Arrays.asList(categoria, categoria2));
 		produto3.getCategorias().addAll(Arrays.asList(categoria));
 
-		categoriaRepository.saveAll(Arrays.asList(categoria, categoria2));
+		categoriaRepository.saveAll(Arrays.asList(categoria, categoria2, categoria3, categoria4, categoria5, categoria6, categoria7, categoria8, categoria9, categoria10, categoria11));
 		produtoRepository.saveAll(Arrays.asList(produto, produto2, produto3));
 
 		Estado estado1 = new Estado(null, "Minas Gerais");
