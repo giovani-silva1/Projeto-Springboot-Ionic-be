@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,21 +38,19 @@ public class CategoriaController {
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(categoriaDTOs);
 	}
-	
+
 	@GetMapping(value = "/page")
 	public ResponseEntity<Page<CategoriaDTO>> listarCategoriasPaginadas(
-			@RequestParam(name = "pagina" , defaultValue = "0") Integer pagina ,
-			@RequestParam(name ="itensPorPagina", defaultValue = "24") Integer itensPorPagina,
-			@RequestParam(name="direcao", defaultValue = "ASC") String direcao,
-			@RequestParam(name="campoOrdenacao", defaultValue = "nome") String campoOrdenacao
-			) {
-		
-		Page<Categoria> categoriasEncontradas = categoriaService.listarCategorias(pagina,itensPorPagina,direcao,campoOrdenacao);
+			@RequestParam(name = "pagina", defaultValue = "0") Integer pagina,
+			@RequestParam(name = "itensPorPagina", defaultValue = "24") Integer itensPorPagina,
+			@RequestParam(name = "direcao", defaultValue = "ASC") String direcao,
+			@RequestParam(name = "campoOrdenacao", defaultValue = "nome") String campoOrdenacao) {
+
+		Page<Categoria> categoriasEncontradas = categoriaService.listarCategorias(pagina, itensPorPagina, direcao,
+				campoOrdenacao);
 		Page<CategoriaDTO> categoriaDTOs = categoriasEncontradas.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok(categoriaDTOs);
 	}
-	
-	
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> listarCategoriaPorId(@PathVariable Integer id) {
@@ -58,17 +58,19 @@ public class CategoriaController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<Categoria> adicionarCategoria(@RequestBody Categoria categoria) {
-		Categoria categoriaNova = categoriaService.adicionarCategoria(categoria);
+	public ResponseEntity<Void> adicionarCategoria(@Valid @RequestBody CategoriaDTO categoriaDto) {
+
+		Categoria categoriaNova = categoriaService.fromDto(categoriaDto);
+		categoriaNova = categoriaService.adicionarCategoria(categoriaNova);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoriaNova.getId())
 				.toUri();
-
-		return ResponseEntity.created(uri).body(categoriaNova);
+		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
-		return ResponseEntity.ok().body(categoriaService.alterarCategoria(id, categoria));
+	public ResponseEntity<CategoriaDTO> atualizarCategoria(@Valid  @RequestBody CategoriaDTO categoriaDto, @PathVariable Integer id) {
+		Categoria categoriaAtualizada = categoriaService.fromDto(categoriaDto);
+		return ResponseEntity.ok().body(categoriaService.alterarCategoria(id, categoriaAtualizada));
 	}
 
 	@DeleteMapping(value = "/{id}")

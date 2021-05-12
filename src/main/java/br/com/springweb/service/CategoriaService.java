@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import br.com.springweb.entities.Categoria;
+import br.com.springweb.entities.dto.CategoriaDTO;
 import br.com.springweb.repositorys.CategoriaRepository;
 import br.com.springweb.service.exception.IntegridadeBancoDeDados;
 import br.com.springweb.service.exception.ObjectNotFoundException;
@@ -38,11 +39,13 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
-	public Categoria alterarCategoria(Integer id, Categoria categoria) {
+	public CategoriaDTO alterarCategoria(Integer id, Categoria categoria) {
 		Categoria categoriaEncontrada = categoriaRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada"));
 		alterarCategoria(categoriaEncontrada, categoria);
-		return categoriaRepository.save(categoriaEncontrada);
+		categoriaEncontrada = categoriaRepository.save(categoriaEncontrada);
+		return fromEntity(categoriaEncontrada);
+		
 	}
 
 	private void alterarCategoria(Categoria categoriaEncontrada, Categoria categoria) {
@@ -59,9 +62,21 @@ public class CategoriaService {
 
 	}
 
-	public Page<Categoria> listarCategorias(Integer numeroPagina, Integer itensPorPagina, String direcao,String campoOrdenado) {
-		PageRequest pageRequest = PageRequest.of(numeroPagina, itensPorPagina, Direction.valueOf(direcao),campoOrdenado);
+	public Page<Categoria> listarCategorias(Integer numeroPagina, Integer itensPorPagina, String direcao,
+			String campoOrdenado) {
+		PageRequest pageRequest = PageRequest.of(numeroPagina, itensPorPagina, Direction.valueOf(direcao),
+				campoOrdenado);
 		return categoriaRepository.findAll(pageRequest);
 	}
+
+	public Categoria fromDto(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	}
+	
+	public CategoriaDTO fromEntity (Categoria categoria) {
+		return new CategoriaDTO(categoria);
+	}
+
+	
 
 }
