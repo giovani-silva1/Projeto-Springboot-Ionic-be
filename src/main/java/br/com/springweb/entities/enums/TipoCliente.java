@@ -28,13 +28,27 @@ public enum TipoCliente {
 		this.nomeTipo = nomeTipo;
 	}
 
-	public static String toEnum(Integer codigo) {
+
+	
+	public static Integer toEnum(String codigo) {
 		if (codigo == null) {
 			return null;
 		}
 		for (TipoCliente tipoClienteEncontrado : TipoCliente.values()) {
 			if (codigo.equals(tipoClienteEncontrado.getCodigo())) {
-				return tipoClienteEncontrado.getNomeTipo();
+				return tipoClienteEncontrado.getCodigo();
+			}
+		}
+		throw new IllegalArgumentException("Tipo cliente não encontrado para o codigo:" + codigo);
+	}
+	
+	public static TipoCliente toEnum(Integer codigo) {
+		if (codigo == null) {
+			return null;
+		}
+		for (TipoCliente tipoClienteEncontrado : TipoCliente.values()) {
+			if (codigo.equals(tipoClienteEncontrado.getCodigo())) {
+				return tipoClienteEncontrado;
 			}
 		}
 		throw new IllegalArgumentException("Tipo cliente não encontrado para o codigo:" + codigo);

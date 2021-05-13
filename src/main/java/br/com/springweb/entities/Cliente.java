@@ -93,7 +93,7 @@ public class Cliente implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
-	public String getTipoCliente() {
+	public TipoCliente getTipoCliente() {
 		return TipoCliente.toEnum(tipoCliente);
 	}
 

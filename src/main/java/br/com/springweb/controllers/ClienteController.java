@@ -1,5 +1,6 @@
 package br.com.springweb.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -10,14 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.springweb.entities.Categoria;
 import br.com.springweb.entities.Cliente;
+import br.com.springweb.entities.dto.CategoriaDTO;
 import br.com.springweb.entities.dto.ClienteDto;
+import br.com.springweb.entities.dto.ClienteNovoDTO;
 import br.com.springweb.service.ClienteService;
 
 @RestController
@@ -61,4 +67,15 @@ public class ClienteController {
 		Page<ClienteDto> clienteDtoPaginados = clientesPaginados.map(cliente -> new ClienteDto(cliente));
 		return ResponseEntity.ok().body(clienteDtoPaginados);
 	}
+	
+	@PostMapping()
+	public ResponseEntity<Void> adicionarCategoria(@Valid @RequestBody ClienteNovoDTO clienteNovoDto) {
+
+		Cliente cliente = clienteService.fromDto(clienteNovoDto);
+		cliente = clienteService.adicionarCliente(cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId())
+				.toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
 }
