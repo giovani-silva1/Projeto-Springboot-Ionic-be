@@ -1,6 +1,8 @@
 package br.com.springweb.controllers.exception;
 
-public class FieldError {
+import java.io.Serializable;
+
+public class FieldError implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 

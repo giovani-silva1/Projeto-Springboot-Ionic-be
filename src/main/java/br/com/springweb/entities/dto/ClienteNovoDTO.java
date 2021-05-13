@@ -2,21 +2,42 @@ package br.com.springweb.entities.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import br.com.springweb.service.validators.AdicionarCliente;
+
+@AdicionarCliente
 public class ClienteNovoDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "Campo não pode ser Nulo")
+	@Length(min = 12,max = 120, message = "Campo deve ter no minimo 12 e maximo de 120 caracteres")
 	private String nome;
+	@NotEmpty
+	@Email
 	private String email;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	private String telefone;
 	private String telefone1;
 	private String telefone2;
+	@NotEmpty(message = "Campo não pode ser Nulo")
+	@Length(min = 12,max = 120, message = "Campo deve ter no minimo 12 e maximo de 120 caracteres")
 	private String logradouro;
 	private String numero;
+	@NotEmpty(message = "Campo não pode ser Nulo")
+	@Length(min = 12,max = 120, message = "Campo deve ter no minimo 12 e maximo de 120 caracteres")
 	private String complemento;
+	@NotEmpty(message = "Campo não pode ser Nulo")
+	@Length(min = 12,max = 120, message = "Campo deve ter no minimo 12 e maximo de 120 caracteres")
 	private String bairro;
+	@NotEmpty(message = "Campo não pode ser Nulo")
+
 	private String cep;
 	private Integer cidadeId;
 	
