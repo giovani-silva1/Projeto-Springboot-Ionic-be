@@ -23,17 +23,17 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService produtoService;
 
-//	@GetMapping
-//	public ResponseEntity<List<Produto>> listarTodos() {
-//		return ResponseEntity.ok().body(produtoService.listarProdutos());
-//	}
-//
-//	@GetMapping(value = "/{id}")
-//	public ResponseEntity<Produto> listarProdutoPorId(@PathVariable Integer id) {
-//		return ResponseEntity.ok().body(produtoService.listarProdutoPorId(id));
-//	}
+	@GetMapping
+	public ResponseEntity<List<Produto>> listarTodos() {
+		return ResponseEntity.ok().body(produtoService.listarProdutos());
+	}
 
-	@GetMapping()
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Produto> listarProdutoPorId(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(produtoService.listarProdutoPorId(id));
+	}
+
+	@GetMapping(value = "/page")
 	public ResponseEntity<Page<ProdutoDTO>> encontrarProdutosPorNomeNasCategorias(
 			@RequestParam(value = "nome", defaultValue = "") String nome,
 			@RequestParam(value = "categorias", defaultValue = "") String categorias,
