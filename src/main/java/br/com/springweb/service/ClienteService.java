@@ -92,7 +92,7 @@ public class ClienteService {
 				clienteNovoDto.getCpfOuCnpj(), TipoCliente.toEnum(clienteNovoDto.getTipoCliente()));
 		Cidade cid = new Cidade(clienteNovoDto.getCidadeId(), null, null);
 		Endereco endereco = new Endereco(null, clienteNovoDto.getLogradouro(), clienteNovoDto.getNumero(),
-				clienteNovoDto.getComplemento(), clienteNovoDto.getBairro(), clienteNovoDto.getCep(), cid, cliente);
+				clienteNovoDto.getComplemento(), clienteNovoDto.getBairro(), clienteNovoDto.getCep(), cliente, cid);
 		cliente.getEnderecos().add(endereco);
 		cliente.getTelefones().add("45447688");
 		if (!clienteNovoDto.getTelefone1().isEmpty()) {

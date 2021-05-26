@@ -34,13 +34,13 @@ public enum EstadoPagamento {
 		this.nomeEstadoPagamento = nomeEstadoPagamento;
 	}
 
-	public static String toEnum(Integer codigo) {
+	public static EstadoPagamento toEnum(Integer codigo) {
 		if (codigo == null) {
 			return null;
 		}
 		for (EstadoPagamento estadoPagamento : EstadoPagamento.values()) {
 			if (codigo.equals(estadoPagamento.getCodigo())) {
-				return estadoPagamento.getNomeEstadoPagamento();
+				return estadoPagamento;
 			}
 		}
 		throw new IllegalArgumentException("Não foi encontrado o estado do pagamento para o codigo informado" + codigo);

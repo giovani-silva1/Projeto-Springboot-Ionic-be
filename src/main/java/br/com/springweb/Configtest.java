@@ -123,9 +123,9 @@ public class Configtest implements CommandLineRunner {
 		Cliente cliente = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		cliente.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
-		Endereco endereco = new Endereco(null, "Rua Flores", "300", "Apto203", "Jardim", "38220834", cidade1, cliente);
-		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", "Sala800", "Centro", "38777012", cidade2,
-				cliente);
+		Endereco endereco = new Endereco(null, "Rua Flores", "300", "Apto203", "Jardim", "38220834", cliente, cidade1);
+		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", "Sala800", "Centro", "38777012",
+				cliente,cidade2);
 
 		clienteRepository.save(cliente);
 		enderecoRepository.saveAll(Arrays.asList(endereco, endereco2));
