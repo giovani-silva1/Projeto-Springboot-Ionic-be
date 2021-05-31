@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import br.com.springweb.entities.enums.EstadoPagamento;
 
 @Entity
-@Table(name = "tb_pagamento_cartao")
+@Table(name = "tb_Pagamento_Cartao")
 @JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento implements Serializable {
 

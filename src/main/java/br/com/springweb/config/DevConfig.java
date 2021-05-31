@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Profile;
 import br.com.springweb.service.DBService;
 
 @Configuration
-@Profile("test")
-public class TestConfig {
+@Profile("dev")
+public class DevConfig {
 
 	@Autowired
 	private DBService dbService;
