@@ -1,12 +1,11 @@
-package br.com.springweb;
+package br.com.springweb.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import br.com.springweb.entities.Categoria;
 import br.com.springweb.entities.Cidade;
@@ -31,9 +30,8 @@ import br.com.springweb.repositorys.PagamentoRepository;
 import br.com.springweb.repositorys.PedidoRepository;
 import br.com.springweb.repositorys.ProdutoRepository;
 
-@Configuration
-@Profile(value = "test")
-public class Configtest implements CommandLineRunner {
+@Service
+public class DBService {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -61,8 +59,9 @@ public class Configtest implements CommandLineRunner {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
-	@Override
-	public void run(String... args) throws Exception {
+	public void instanciateTestDatabase() throws ParseException {
+		
+
 
 		Categoria categoria = new Categoria(null, "Informatica");
 		Categoria categoria2 = new Categoria(null, "Escritório");
@@ -163,3 +162,5 @@ public class Configtest implements CommandLineRunner {
 	}
 
 }
+
+
