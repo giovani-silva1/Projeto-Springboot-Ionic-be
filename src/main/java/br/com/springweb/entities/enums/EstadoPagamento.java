@@ -1,49 +1,40 @@
 package br.com.springweb.entities.enums;
 
 public enum EstadoPagamento {
-
+	
 	PENDENTE(1, "Pendente"),
 	QUITADO(2, "Quitado"),
-	CANCELADO(3,"Cancelado");
-
-	private int codigo;
-	private String nomeEstadoPagamento;
-
-	private EstadoPagamento() {
-
+	CANCELADO(3, "Cancelado");
+	
+	private int cod;
+	private String descricao;
+	
+	private EstadoPagamento(int cod, String descricao) {
+		this.cod = cod;
+		this.descricao = descricao;
 	}
-
-	private EstadoPagamento(int codigo, String nomeEstadoPagamento) {
-		this.codigo = codigo;
-		this.nomeEstadoPagamento = nomeEstadoPagamento;
+	
+	public int getCod() {
+		return cod;
 	}
-
-	public int getCodigo() {
-		return codigo;
+	
+	public String getDescricao () {
+		return descricao;
 	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getNomeEstadoPagamento() {
-		return nomeEstadoPagamento;
-	}
-
-	public void setNomeEstadoPagamento(String nomeEstadoPagamento) {
-		this.nomeEstadoPagamento = nomeEstadoPagamento;
-	}
-
-	public static EstadoPagamento toEnum(Integer codigo) {
-		if (codigo == null) {
+	
+	public static EstadoPagamento toEnum(Integer cod) {
+		
+		if (cod == null) {
 			return null;
 		}
-		for (EstadoPagamento estadoPagamento : EstadoPagamento.values()) {
-			if (codigo.equals(estadoPagamento.getCodigo())) {
-				return estadoPagamento;
+		
+		for (EstadoPagamento x : EstadoPagamento.values()) {
+			if (cod.equals(x.getCod())) {
+				return x;
 			}
 		}
-		throw new IllegalArgumentException("Não foi encontrado o estado do pagamento para o codigo informado" + codigo);
+		
+		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
 
 }

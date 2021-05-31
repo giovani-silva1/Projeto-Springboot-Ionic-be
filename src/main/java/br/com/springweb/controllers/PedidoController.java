@@ -37,7 +37,7 @@ public class PedidoController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.POST, produces = "application/json")
+	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Pedido obj) {
 		obj = pedidoService.salvarPedido(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

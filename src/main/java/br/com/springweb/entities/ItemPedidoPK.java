@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class ItemPedido_PK implements Serializable {
+public class ItemPedidoPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class ItemPedido_PK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedido_PK other = (ItemPedido_PK) obj;
+		ItemPedidoPK other = (ItemPedidoPK) obj;
 		if (pedido == null) {
 			if (other.pedido != null)
 				return false;

@@ -22,8 +22,8 @@ import br.com.springweb.entities.enums.EstadoPagamento;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+private static final long serialVersionUID = 1L;
+	
 	@Id
 	private Integer id;
 	private Integer estado;
@@ -40,7 +40,7 @@ public abstract class Pagamento implements Serializable {
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = (estado==null) ? null : estado.getCodigo();
+		this.estado = (estado==null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
 
@@ -57,7 +57,7 @@ public abstract class Pagamento implements Serializable {
 	}
 
 	public void setEstado(EstadoPagamento estado) {
-		this.estado = estado.getCodigo();
+		this.estado = estado.getCod();
 	}
 
 	public Pedido getPedido() {

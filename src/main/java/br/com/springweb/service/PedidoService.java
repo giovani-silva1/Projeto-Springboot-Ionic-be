@@ -13,6 +13,7 @@ import br.com.springweb.entities.ItemPedido;
 import br.com.springweb.entities.PagamentoComBoleto;
 import br.com.springweb.entities.Pedido;
 import br.com.springweb.entities.enums.EstadoPagamento;
+import br.com.springweb.repositorys.ClienteRepository;
 import br.com.springweb.repositorys.ItemPedidoRepository;
 import br.com.springweb.repositorys.PagamentoRepository;
 import br.com.springweb.repositorys.PedidoRepository;
@@ -37,6 +38,9 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
+	@Autowired
+	private ClienteService clienteService;
+
 	public List<Pedido> listarPedidos() {
 		return pedidoRepository.findAll();
 	}
@@ -47,34 +51,11 @@ public class PedidoService {
 				"Não foi encontrado o pedido solicitado:" + id + ", tipo:" + Pedido.class));
 	}
 
-/*	@Transactional
-	public Pedido salvarPedido(Pedido novoPedido) {
-		novoPedido.setId(null);
-		novoPedido.setInstante(new Date());
-		novoPedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
-		novoPedido.getPagamento().setPedido(novoPedido);
-		if (novoPedido.getPagamento() instanceof PagamentoComBoleto) {
-			PagamentoComBoleto pagamentoComBoleto = (PagamentoComBoleto) novoPedido.getPagamento();
-			boletoService.definirDataPagamento(pagamentoComBoleto, novoPedido.getInstante());
-		}
 
-		novoPedido = pedidoRepository.save(novoPedido);
-		pagamentoRepository.save(novoPedido.getPagamento());
-
-		for (ItemPedido itens : novoPedido.getItens()) {
-			itens.setDesconto(0.0);
-			itens.setPreco(produtoRepository.findById(itens.getProduto().getId()).orElseThrow().getPreco());
-			itens.setPedido(novoPedido);
-		}
-		itemPedidoRepository.saveAll(novoPedido.getItens());
-		return novoPedido;
-	}
-*/
-	
-	@Transactional
 	public Pedido salvarPedido(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.encontrarClientePorId(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -85,10 +66,12 @@ public class PedidoService {
 		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.listarProdutoPorId(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.listarProdutoPorId(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj.toString());
 		return obj;
 	}
 }

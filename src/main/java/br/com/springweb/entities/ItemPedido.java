@@ -1,22 +1,21 @@
 package br.com.springweb.entities;
-
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
-@Table(name = "tb_itemPedido")
 public class ItemPedido implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-
+	
 	@JsonIgnore
 	@EmbeddedId
-	private ItemPedido_PK id = new ItemPedido_PK();
+	private ItemPedidoPK id = new ItemPedidoPK();
 	
 	private Double desconto;
 	private Integer quantidade;
@@ -55,11 +54,11 @@ public class ItemPedido implements Serializable {
 		id.setProduto(produto);
 	}
 	
-	public ItemPedido_PK getId() {
+	public ItemPedidoPK getId() {
 		return id;
 	}
 
-	public void setId(ItemPedido_PK id) {
+	public void setId(ItemPedidoPK id) {
 		this.id = id;
 	}
 
@@ -91,9 +90,7 @@ public class ItemPedido implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((desconto == null) ? 0 : desconto.hashCode());
-		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
-		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -106,23 +103,26 @@ public class ItemPedido implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ItemPedido other = (ItemPedido) obj;
-		if (desconto == null) {
-			if (other.desconto != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!desconto.equals(other.desconto))
-			return false;
-		if (preco == null) {
-			if (other.preco != null)
-				return false;
-		} else if (!preco.equals(other.preco))
-			return false;
-		if (quantidade == null) {
-			if (other.quantidade != null)
-				return false;
-		} else if (!quantidade.equals(other.quantidade))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
 	
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Qte: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço unitário: ");
+		builder.append(nf.format(getPreco()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
 }
